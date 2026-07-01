@@ -1,6 +1,10 @@
 package Day3;
 
+import java.util.List;
+
 public abstract class Item {
+
+
 
     protected String name;
 
@@ -69,6 +73,8 @@ class Potion extends Item{
 
     @Override
     public void useItem(Player player) {
+
+        player.heal(this.getHealingHp());
 
 
 

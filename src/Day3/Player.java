@@ -4,20 +4,21 @@ import java.util.*;
 
 public class Player {
 
+    List<Item> inventory;
+
     private int hp;
 
     private String name;
 
     private int attackPower;
 
-    private String inventory;
 
     private Room currentRoom;
 
     int baseAttackPower = 20;
 
 
-    Player(String name, Room startingRoom,String inventory) {
+    Player(String name, Room startingRoom) {
 
         this.name = name;
 
@@ -25,7 +26,7 @@ public class Player {
 
         this.currentRoom = startingRoom;
 
-        this.inventory=inventory;
+        this.inventory = new ArrayList<>();
 
 
     }
@@ -44,10 +45,6 @@ public class Player {
         return attackPowerDamage();
     }
 
-
-    public String getInventory() {
-        return inventory;
-    }
 
     public void moveToRoom(Room nextRoom) {
 
@@ -94,10 +91,17 @@ public class Player {
 
     }
 
-    public void setInventory(String item){
 
-        this.inventory=item;
+    public void heal(int healingAmount) {
 
+        this.hp = this.hp + healingAmount;
+
+        if (this.hp > 100) {
+
+            this.hp = 100;
+        }
+
+        System.out.println("Healed " + healingAmount + " HP. Current HP: " + this.hp);
     }
 
 
