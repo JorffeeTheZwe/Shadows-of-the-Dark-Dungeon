@@ -14,9 +14,13 @@ public class Main {
 
         room.setMonsters(enemy);
 
+        Player player=new Player("Hero",room);
+
+        BattleSystem battleSystem=new BattleSystem( player ,  enemy);
 
 
-        Player player=new Player("Hero",room," ");
+
+
 
 
 
@@ -40,7 +44,22 @@ public class Main {
 
 
 
-        System.out.println("[အခြေအနေ]  ");
+//        System.out.println("[အခြေအနေ]  ");
+//
+//        if(cmd.equalsIgnoreCase("fight")){
+//
+//            System.out.println("You cut enermy with sword.");
+//
+//        }
+//
+//        else if(cmd.equalsIgnoreCase("flee")){
+//
+//
+//
+//        }
+
+//            turnBased();
+
 
 
     }

@@ -12,6 +12,8 @@ public class Room {
 
     Map<String, Room> exit;
 
+    List<Item> itemInRoom;
+
     Room(String name, String description) {
 
         this.name = name;
@@ -21,6 +23,8 @@ public class Room {
         this.monsters = null;
 
         this.exit = new HashMap<>();
+
+        this.itemInRoom=new LinkedList<>();
 
 
     }

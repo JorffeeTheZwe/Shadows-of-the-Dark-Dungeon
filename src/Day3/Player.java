@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Player {
 
+    private Weapon equippedWeapon;
+
     List<Item> inventory;
 
     private int hp;
 
     private String name;
 
-    private int attackPower;
-
 
     private Room currentRoom;
 
-    int baseAttackPower = 20;
+    private int baseAttackPower = 20;
 
 
     Player(String name, Room startingRoom) {
@@ -43,6 +43,18 @@ public class Player {
     public int getAttackPower() {
 
         return attackPowerDamage();
+    }
+
+    public List<Item> getInventory() {
+        return this.inventory;
+    }
+
+    public void addItem(Item item) {
+
+        this.inventory.add(item);
+
+        System.out.println(item.getName() + "that you pick up.");
+
     }
 
 
@@ -86,7 +98,17 @@ public class Player {
         int bonusRandomDamage = random.nextInt(7);
 
 
-        return baseAttackPower + bonusRandomDamage;
+        if (equippedWeapon != null) {
+
+            int weaponDamage=equippedWeapon.getBonusDamage();
+
+
+            return baseAttackPower + bonusRandomDamage + weaponDamage;
+
+        } else {
+
+            return bonusRandomDamage + baseAttackPower;
+        }
 
 
     }
@@ -102,6 +124,15 @@ public class Player {
         }
 
         System.out.println("Healed " + healingAmount + " HP. Current HP: " + this.hp);
+    }
+
+    public void equipWeapon(Weapon weapon) {
+
+        this.equippedWeapon = weapon;
+
+        System.out.println(this.getName() + "is " + weapon.getName() + "have been equipped.");
+
+
     }
 
 

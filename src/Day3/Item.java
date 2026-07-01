@@ -32,21 +32,27 @@ public abstract class Item {
 
  class Weapon extends Item {
 
-    private int bonusDamage;
+    private int bonusDamage=5;
 
 
 
 
 
-    Weapon(String name,int bonusDamage){
+    Weapon(String name){
 
         super(name);
 
-        this.bonusDamage=bonusDamage;
+
     }
 
      @Override
      public void useItem(Player player) {
+
+        player.equipWeapon(this);
+
+         System.out.println(this.getName()+" is equipped. (Bonus Damage :)"+this.getBonusDamage());
+
+
 
          
 
