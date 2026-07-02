@@ -4,69 +4,97 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        Room room=new Room("DARK DUNGEON","An old, damp room with brick walls.");
+        Room room = new Room("DARK DUNGEON", "An old, damp room with brick walls.");
 
-        Enemy enemy=new Enemy("Gobling");
+        Enemy enemy = new Enemy("Gobling");
 
         room.setMonsters(enemy);
 
-        Player player=new Player("Hero",room);
+        Player player = new Player("Hero", room);
 
-        BattleSystem battleSystem=new BattleSystem( player ,  enemy);
-
-
-
-
-
-
-
-
+        BattleSystem battleSystem = new BattleSystem(player, enemy);
 
 
         System.out.println("==============================");
         System.out.println("LOCATION: THE DARK DUNGEON");
         System.out.println("==============================");
 
-        System.out.println("မင်းဟာ အုတ်နံရံဟောင်းတွေနဲ့ စိုစွတ်တဲ့ အခန်းကျဉ်းတစ်ခုထဲကို ရောက်နေတယ်။ \n"+
+        System.out.println("မင်းဟာ အုတ်နံရံဟောင်းတွေနဲ့ စိုစွတ်တဲ့ အခန်းကျဉ်းတစ်ခုထဲကို ရောက်နေတယ်။ \n" +
                 "အခန်းရဲ့ မြောက်ဘက် [North] မှာ တံခါးအိုကြီးတစ်ခု ရှိပြီး၊ အရှေ့ဘက် [East] မှာ လမ်းကျဉ်းတစ်ခု ရှိတယ်။\n" +
                 "ကြမ်းပြင်ပေါ်မှာ သံချေးတက်နေတဲ့ [Rusty Sword] တစ်ချောင်းကို တွေ့ရတယ်။");
 
         boolean playing = true;
 
-        while(playing){
+        while (playing) {
+
 
             System.out.println("How do you command ?");
-            String cmd=scanner.nextLine();
+            String cmd = scanner.nextLine();
+
+            if (room.hasMonsters()) {
+
+                if (cmd.equalsIgnoreCase("fight")) {
+                    // battleSystem.attackToEnemy();
+
+                    battleSystem.turnBased();
+
+                    if(!room.hasMonsters()) {
+
+                        room.removeMonsters();
+
+                    }
+
+
+                } else if (cmd.equalsIgnoreCase("flee")) {
+
+                    battleSystem.fleeFromEnemy();
+
+                    System.out.println("Game Over");
+
+                    playing = false;
+
+                }
 
 
 
-//        System.out.println("[အခြေအနေ]  ");
-//
-//        if(cmd.equalsIgnoreCase("fight")){
-//
-//            System.out.println("You cut enermy with sword.");
-//
-//        }
-//
-//        else if(cmd.equalsIgnoreCase("flee")){
-//
-//
-//
-//        }
+                }
 
-//            turnBased();
+            else if(cmd.equalsIgnoreCase("quit")){
 
+                    System.out.println("Exit from the game.");
+
+                    playing=false;
+
+                } else {
+
+                    System.out.println("Wrong Command");
+
+                }
+
+
+
+            if (!room.hasMonsters()) {
+
+                System.out.println("Game ended.No monster in room");
+
+                playing=false;
+
+
+            }
+
+
+
+
+
+
+        }
 
 
     }
-
-
-    }
-
 
 
 }
