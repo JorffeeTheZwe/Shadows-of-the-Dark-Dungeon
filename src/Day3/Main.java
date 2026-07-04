@@ -6,6 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        String cmd;
+
         Scanner scanner = new Scanner(System.in);
 
         Room room = new Room("DARK DUNGEON", "An old, damp room with brick walls.");
@@ -16,7 +18,18 @@ public class Main {
 
         Player player = new Player("Hero", room);
 
+        Weapon weapon = new Weapon("Rusty Sword.");
+
+        Potion potion=new Potion("Angle Fly Regen");
+
+        room.addItem(weapon);
+
         BattleSystem battleSystem = new BattleSystem(player, enemy);
+
+        Room secondRoom = new Room("Prison Room", "Abandoned Prison Room");
+        room.setExit("north", secondRoom);
+
+        secondRoom.setExit("south", room);
 
 
         System.out.println("==============================");
@@ -32,63 +45,120 @@ public class Main {
         while (playing) {
 
 
-            System.out.println("How do you command ?");
-            String cmd = scanner.nextLine();
-
-            if (room.hasMonsters()) {
-
-                if (cmd.equalsIgnoreCase("fight")) {
-                    // battleSystem.attackToEnemy();
-
-                    battleSystem.turnBased();
-
-                    if(!room.hasMonsters()) {
-
-                        room.removeMonsters();
-
-                    }
+            System.out.print("How do you command ? fight  flee quit go-->room  : ");
+            cmd = scanner.nextLine();
 
 
-                } else if (cmd.equalsIgnoreCase("flee")) {
+            if (cmd.equalsIgnoreCase("fight")) {
 
-                    battleSystem.fleeFromEnemy();
+                Room currentRoom3 = player.getCurrentRoom();
 
-                    System.out.println("Game Over");
+                if (!currentRoom3.hasMonsters()) {
 
-                    playing = false;
+                    System.out.println("Monster have been dead.");
 
-                }
-
-
-
-                }
-
-            else if(cmd.equalsIgnoreCase("quit")){
-
-                    System.out.println("Exit from the game.");
-
-                    playing=false;
 
                 } else {
 
-                    System.out.println("Wrong Command");
+
+                    battleSystem.turnBased();
+
+                    if (!enemy.isAlive()) {
+
+                        currentRoom3.removeMonsters();
+
+                    }
 
                 }
 
 
+            } else if (cmd.equalsIgnoreCase("flee")) {
 
-            if (!room.hasMonsters()) {
 
-                System.out.println("Game ended.No monster in room");
+                Room currentRoom4 = player.getCurrentRoom();
 
-                playing=false;
+                if (currentRoom4.hasMonsters()) {
 
+                    battleSystem.fleeFromEnemy();
+
+
+                } else {
+
+                    System.out.println("No enemy from run.");
+
+                }
+
+            } else if (cmd.equalsIgnoreCase("pick up")) {
+
+                Room currentRoom = player.getCurrentRoom();
+
+                if (currentRoom.hasItem()) {
+
+                    Item foundItem = currentRoom.getItemInRoom();
+
+
+                    System.out.println("You pick up :" + foundItem.getName());
+
+
+                    player.addItem(foundItem);
+
+                    foundItem.useItem(player);
+
+
+                    currentRoom.removeItem(foundItem);
+
+
+                } else {
+
+                    System.out.println("No item in room for pick up.");
+
+                }
+
+
+            } else if (cmd.equalsIgnoreCase("quit")) {
+
+                System.out.println("Exit from the game.");
+
+                playing = false;
+
+            } else if (cmd.toLowerCase().startsWith("go")) {
+
+                Scanner scanner2 = new Scanner(cmd);
+                scanner2.next(); //ပထမ element ကျော်
+
+                if (scanner2.hasNext()) {
+
+                    String direction = scanner2.next(); // ဒုတိယ element ယူ
+
+
+                    Room currentRoom2 = player.getCurrentRoom();
+                    Room nextRoom2 = currentRoom2.getExit(direction);
+
+
+                    if (nextRoom2 != null) {
+
+
+                        player.moveToRoom(nextRoom2);
+
+                        System.out.println(player.getName() + " reach the " + nextRoom2.getName());
+
+                    } else {
+
+                        System.out.println("You are already have in this room.");
+                    }
+
+                } else {
+
+                    System.out.println("Enter direction you want to go.");
+
+                }
+
+
+            } else {
+
+                System.out.println("Wrong Command");
 
             }
-
-
-
-
 
 
         }

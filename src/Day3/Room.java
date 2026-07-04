@@ -24,55 +24,93 @@ public class Room {
 
         this.exit = new HashMap<>();
 
-        this.itemInRoom=new LinkedList<>();
+        this.itemInRoom = new LinkedList<>();
 
 
     }
 
-    public void setMonsters(Enemy monsters){
-        this.monsters=monsters;
+    public void setMonsters(Enemy monsters) {
+        this.monsters = monsters;
     }
 
-    public Enemy getMonsters(){
+    public Enemy getMonsters() {
 
         return this.monsters;
 
     }
 
 
-    public void removeMonsters(){
+    public void removeMonsters() {
 
-        this.monsters=null;
-
-    }
-
-
-    public boolean hasMonsters(){
-
-      return  this.monsters != null;
+        this.monsters = null;
 
     }
 
 
-    public void setExit(String direction,Room neighbour) {
-        exit.put(direction.toLowerCase(),neighbour);
+    public boolean hasMonsters() {
+
+        return this.monsters != null;
+
     }
 
-    public Room getExit(String direction){
+
+    public void setExit(String direction, Room neighbour) {
+
+        exit.put(direction.toLowerCase(), neighbour);
+    }
+
+    public Room getExit(String direction) {
 
         return exit.get(direction.toLowerCase());
 
     }
 
 
-
-
     public String getName() {
         return name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
 
-        return description+"\n Optional directions :"+exit.keySet().toString();
+        return description + "\n Optional directions :" + exit.keySet().toString();
+    }
+
+
+    public void removeItem(Item item) {
+
+        this.itemInRoom.remove(item);
+
+    }
+
+    public void addItemInRoom(List<Item> itemInRoom) {
+        this.itemInRoom = itemInRoom;
+    }
+
+    public Item getItemInRoom() {
+
+        if (!this.itemInRoom.isEmpty()) {
+
+            return this.itemInRoom.getFirst();
+
+
+        }
+
+        return null;
+
+
+    }
+
+
+    public void addItem(Item item) {
+
+        this.itemInRoom.add(item);
+
+
+    }
+
+    public boolean hasItem() {
+
+        return !this.itemInRoom.isEmpty();
+
     }
 }

@@ -67,13 +67,13 @@ public abstract class Item {
 
 class Potion extends Item{
 
-    private int healingHp;
+    private int healingHp=5;
 
-    Potion(String name,int healingHp){
+    Potion(String name){
 
         super(name);
 
-        this.healingHp=healingHp;
+       // this.healingHp=healingHp;
     }
 
 
