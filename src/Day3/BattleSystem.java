@@ -16,6 +16,7 @@ public class BattleSystem {
         this.enemy = enemy;
         this.scanner = new Scanner(System.in);
 
+
     }
 
 
@@ -24,6 +25,8 @@ public class BattleSystem {
         int damageToEnemy = player.getAttackPower();
 
         enemy.takeDamage(damageToEnemy);
+
+
 
         System.out.println("You give  " + enemy.getName() + damageToEnemy + " With A Sword.");
 

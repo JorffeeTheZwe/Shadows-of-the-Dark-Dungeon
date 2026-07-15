@@ -10,42 +10,103 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        // အခန်း ကို စီမံရန် ၁
+
         Room room = new Room("DARK DUNGEON", "An old, damp room with brick walls.");
 
+        Room secondRoom = new Room("Prison Room", "Abandoned Prison Room");
+
+        Room thirdRoom = new Room("The Abyss Room", "In the deepest area of the east , there is a room know as The Abyss.");
+
+        Room fourthRoom = new Room("The Dragon Room", "The room have dragon shpae.");
+
+
+        // Enemy အကြောင်း စီမံရန်
         Enemy enemy = new Enemy("Gobling");
 
-        room.setMonsters(enemy);
+        Enemy enemy1 = new Enemy("Skeleton");
 
+        Enemy enemy3 = new Enemy("Uchiha Madara");
+
+        Enemy enemy4 = new Enemy("Hinata Hyuga");
+
+
+        // ကစား သူ ကို စီမံရန်
         Player player = new Player("Hero", room);
+
+        //Item တွေ အကြောင်းစီမံ ရန်
 
         Weapon weapon = new Weapon("Rusty Sword.");
 
-        Potion potion=new Potion("Angle Fly Regen");
+        Potion potion = new Potion("Angle Fly Regen");
+
+
+        // အခန်းကို စီမံရန် ၂
+
+        room.setExit("north", room);
+
+        room.setExit("south", secondRoom);
+
+        room.setExit("east", thirdRoom);
+
+        secondRoom.setExit("east", thirdRoom);
+
+        secondRoom.setExit("north", room);
+
+        secondRoom.setExit("west", fourthRoom);
+
+        thirdRoom.setExit("south", secondRoom);
+
+        thirdRoom.setExit("north", room);
+
+        thirdRoom.setExit("west", fourthRoom);
+
+        room.setExit("west", fourthRoom);
+
+        fourthRoom.setExit("north", room);
+
+        fourthRoom.setExit("south", secondRoom);
+
+        fourthRoom.setExit("east", thirdRoom);
+
+
+        //Item ကို စီမံရန် ၂
 
         room.addItem(weapon);
 
-        BattleSystem battleSystem = new BattleSystem(player, enemy);
+        secondRoom.addItem(potion);
 
-        Room secondRoom = new Room("Prison Room", "Abandoned Prison Room");
-        room.setExit("north", secondRoom);
 
-        secondRoom.setExit("south", room);
+        thirdRoom.addItem(weapon);
+
+        fourthRoom.addItem(potion);
+
+
+        //ရန်သူကို စီမံရန် ၂
+
+        room.setMonsters(enemy);
+
+
+        secondRoom.setMonsters(enemy1);
+
+
+        thirdRoom.setMonsters(enemy3);
+
+        fourthRoom.setMonsters(enemy4);
 
 
         System.out.println("==============================");
         System.out.println("LOCATION: THE DARK DUNGEON");
         System.out.println("==============================");
 
-        System.out.println("မင်းဟာ အုတ်နံရံဟောင်းတွေနဲ့ စိုစွတ်တဲ့ အခန်းကျဉ်းတစ်ခုထဲကို ရောက်နေတယ်။ \n" +
-                "အခန်းရဲ့ မြောက်ဘက် [North] မှာ တံခါးအိုကြီးတစ်ခု ရှိပြီး၊ အရှေ့ဘက် [East] မှာ လမ်းကျဉ်းတစ်ခု ရှိတယ်။\n" +
-                "ကြမ်းပြင်ပေါ်မှာ သံချေးတက်နေတဲ့ [Rusty Sword] တစ်ချောင်းကို တွေ့ရတယ်။");
+        System.out.println("မင်းဟာ အုတ်နံရံဟောင်းတွေနဲ့ စိုစွတ်တဲ့  အရပ်လေး မျက်နှာ အခန်းရှိတဲ့ နေရာတစ်ခုထဲကို ရောက်နေတယ်။");
 
         boolean playing = true;
 
         while (playing) {
 
 
-            System.out.print("How do you command ? fight  flee quit go-->room  : ");
+            System.out.print("How do you command ? | fight | flee | pick up  | quit go-->room | : ");
             cmd = scanner.nextLine();
 
 
@@ -60,10 +121,14 @@ public class Main {
 
                 } else {
 
+                    Enemy currentEnemy = currentRoom3.getMonsters();
 
-                    battleSystem.turnBased();
+                    BattleSystem currentFight = new BattleSystem(player, currentEnemy);
 
-                    if (!enemy.isAlive()) {
+
+                    currentFight.turnBased();
+
+                    if (!currentEnemy.isAlive()) {
 
                         currentRoom3.removeMonsters();
 
@@ -77,9 +142,14 @@ public class Main {
 
                 Room currentRoom4 = player.getCurrentRoom();
 
+
                 if (currentRoom4.hasMonsters()) {
 
-                    battleSystem.fleeFromEnemy();
+                    Enemy currentEnemy = currentRoom4.getMonsters();
+
+                    BattleSystem currentFlee = new BattleSystem(player, currentEnemy);
+
+                    currentFlee.fleeFromEnemy();
 
 
                 } else {
@@ -140,11 +210,13 @@ public class Main {
 
                         player.moveToRoom(nextRoom2);
 
+
                         System.out.println(player.getName() + " reach the " + nextRoom2.getName());
+
 
                     } else {
 
-                        System.out.println("You are already have in this room.");
+                        System.out.println("There is no room for you go");
                     }
 
                 } else {
